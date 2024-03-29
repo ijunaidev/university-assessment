@@ -5,7 +5,7 @@ Use the below command to create a database in MySQL
 > Create database university;
 
 
-## Create Table
+## Create Table (Optional) - Hibernate will take care of it
 Use the below command to create a table in `university` database in MySQL
 
 ```
