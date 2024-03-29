@@ -13,7 +13,7 @@ public class UniversityDTO {
     private String alphaTwoCode;
     @JsonProperty("web_pages")
     private List<String> webPages;
-    @JsonProperty("state_province")
+    @JsonProperty("state-province")
     private String stateProvince;
     private String name;
     private List<String> domains;

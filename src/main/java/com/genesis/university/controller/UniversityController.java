@@ -39,7 +39,7 @@ public class UniversityController {
     }
 
     @PutMapping("/{country}/{id}")
-    public ResponseEntity<String> updateUniversity(@PathVariable String country, @PathVariable Long id, @RequestBody University university) {
+    public ResponseEntity<String> updateUniversity(@PathVariable String country, @PathVariable Long id, @RequestBody UniversityDTO university) {
         if (country != null && !country.isEmpty()) {
             country = CountryUtils.capitalizeFirstCharacterOfCountry(country);
         }

@@ -78,17 +78,20 @@ public class UniversityService {
         List<University> universityList = new ArrayList<>();
         for(UniversityDTO universityDTO : universityDTOList) {
             University university = new University();
-
-            university.setAlphaTwoCode(universityDTO.getAlphaTwoCode());
-            university.setWebPages(universityDTO.getWebPages() != null ? String.join(",", universityDTO.getWebPages()) : null);
-            university.setStateProvince(universityDTO.getStateProvince());
-            university.setName(universityDTO.getName());
-            university.setDomains(universityDTO.getDomains() != null ? String.join(",", universityDTO.getDomains()) : null);
-            university.setCountry(universityDTO.getCountry());
-
-            universityList.add(university);
+            universityList.add(convertUniversityDTOIntoUniversity(universityDTO, university));
         }
         return universityList;
+    }
+
+    public University convertUniversityDTOIntoUniversity(UniversityDTO universityDTO, University university) {
+        university.setAlphaTwoCode(universityDTO.getAlphaTwoCode());
+        university.setWebPages(universityDTO.getWebPages() != null ? String.join(",", universityDTO.getWebPages()) : null);
+        university.setStateProvince(universityDTO.getStateProvince());
+        university.setName(universityDTO.getName());
+        university.setDomains(universityDTO.getDomains() != null ? String.join(",", universityDTO.getDomains()) : null);
+        university.setCountry(universityDTO.getCountry());
+
+        return university;
     }
 
     private void persistDataInDb(List<UniversityDTO> universityDTOList) {
@@ -102,16 +105,10 @@ public class UniversityService {
         }
     }
 
-    public void updateUniversity(String country, Long id, University university) {
+    public void updateUniversity(String country, Long id, UniversityDTO university) {
         University existingUniversity = universityRepository.findByCountryAndUniversityId(country, id);
         if (existingUniversity != null) {
-            existingUniversity.setAlphaTwoCode(university.getAlphaTwoCode());
-            existingUniversity.setWebPages(university.getWebPages());
-            existingUniversity.setStateProvince(university.getStateProvince());
-            existingUniversity.setName(university.getName());
-            existingUniversity.setDomains(university.getDomains());
-            existingUniversity.setCountry(university.getCountry());
-
+            convertUniversityDTOIntoUniversity(university, existingUniversity);
             universityRepository.save(existingUniversity);
         }
     }
