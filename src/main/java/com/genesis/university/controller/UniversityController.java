@@ -1,7 +1,6 @@
 package com.genesis.university.controller;
 
 import com.genesis.university.dto.UniversityDTO;
-import com.genesis.university.model.University;
 import com.genesis.university.service.UniversityService;
 import com.genesis.university.utils.CountryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
