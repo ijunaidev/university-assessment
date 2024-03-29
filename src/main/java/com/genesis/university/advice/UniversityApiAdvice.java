@@ -16,11 +16,10 @@ public class UniversityApiAdvice {
         log.error("MissingServletRequestParameterException occurred: ", ex);
         return new ResponseEntity<>("Missing parameter: " + ex.getParameterName(), HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleInternalServerError(Exception ex) {
         log.error("Exception occurred: ", ex);
         return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }

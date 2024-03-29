@@ -12,6 +12,9 @@ public interface UniversityRepository extends JpaRepository<University, Long> {
     @Query("select u from University u where u.country = ?1")
     List<University> findAllByCountry(String country);
 
+    @Query("select u from University u where u.name = ?1")
+    University findByName(String name);
+
     @Query("select count(u) > 0 from University u where u.country = ?1")
     boolean existsByCountry(String country);
 

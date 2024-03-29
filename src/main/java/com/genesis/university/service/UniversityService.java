@@ -60,15 +60,7 @@ public class UniversityService {
     private List<UniversityDTO> populateUniversityDTOList(List<University> universityList) {
         List<UniversityDTO> universityDTOList = new ArrayList<>();
         for(University university : universityList) {
-            UniversityDTO universityDTO = UniversityDTO.builder()
-                    .alphaTwoCode(university.getAlphaTwoCode())
-                    .webPages(university.getWebPages().isEmpty() ? new ArrayList<>() : List.of(university.getWebPages().split(",")))
-                    .stateProvince(university.getStateProvince())
-                    .name(university.getName())
-                    .domains(university.getDomains().isEmpty() ? new ArrayList<>() : List.of(university.getDomains().split(",")))
-                    .country(university.getCountry())
-                    .build();
-
+            UniversityDTO universityDTO = convertUniversityIntoUniversityDTO(university);
             universityDTOList.add(universityDTO);
         }
         return universityDTOList;
@@ -94,6 +86,17 @@ public class UniversityService {
         return university;
     }
 
+    public UniversityDTO convertUniversityIntoUniversityDTO(University university) {
+        return UniversityDTO.builder()
+                .alphaTwoCode(university.getAlphaTwoCode())
+                .webPages(university.getWebPages().isEmpty() ? new ArrayList<>() : List.of(university.getWebPages().split(",")))
+                .stateProvince(university.getStateProvince())
+                .name(university.getName())
+                .domains(university.getDomains().isEmpty() ? new ArrayList<>() : List.of(university.getDomains().split(",")))
+                .country(university.getCountry())
+                .build();
+    }
+
     private void persistDataInDb(List<UniversityDTO> universityDTOList) {
         List<University> universityList = populateUniversityList(universityDTOList);
 
@@ -115,5 +118,10 @@ public class UniversityService {
 
     public boolean existsByCountryAndUniversityId(String country, Long id) {
         return universityRepository.existsByCountryAndUniversityId(country, id);
+    }
+
+    public UniversityDTO findByName(String name) {
+        University university = universityRepository.findByName(name);
+        return convertUniversityIntoUniversityDTO(university);
     }
 }

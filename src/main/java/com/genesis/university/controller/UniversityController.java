@@ -6,6 +6,7 @@ import com.genesis.university.utils.CountryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +28,7 @@ public class UniversityController {
 
     // http://localhost:8085/api/v1/university/getByCountry?country=Pakistan
     @GetMapping("/getByCountry")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<UniversityDTO> getUniversitiesByCountry(@RequestParam(required = true) String country) {
         if (country != null && country.isEmpty()) {
             return Collections.emptyList();
@@ -35,6 +37,12 @@ public class UniversityController {
         country = CountryUtils.capitalizeFirstCharacterOfCountry(country);
 
         return universityService.getUniversitiesByCountry(country);
+    }
+
+    @GetMapping("/details")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public UniversityDTO getUniversityDetailByName(@RequestParam(required = true) String name) {
+        return universityService.findByName(name);
     }
 
     @PutMapping("/{country}/{id}")
